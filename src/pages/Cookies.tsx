@@ -184,7 +184,6 @@ export default function Cookies({ onNavigate }: CookiesProps) {
             </p>
             <ul className="text-gray-700 mb-4">
               <li><strong>Google Analytics:</strong> Helps us understand website usage and improve user experience. <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" className="text-[#8eff7a] underline">Google Privacy Policy</a></li>
-              <li><strong>Supabase:</strong> Our backend infrastructure provider for authentication and data storage. <a href="https://supabase.com/privacy" target="_blank" rel="noopener noreferrer" className="text-[#8eff7a] underline">Supabase Privacy Policy</a></li>
             </ul>
             <p className="text-gray-700 mb-4">
               These third-party services have their own privacy policies and cookie practices. We recommend reviewing their policies to understand how they use cookies.

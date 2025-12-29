@@ -131,7 +131,7 @@ export default function POPIA({ onNavigate }: POPIAProps) {
                   Personal information is stored securely using:
                 </p>
                 <ul className="text-gray-700 space-y-1 ml-5 mt-3">
-                  <li>• Encrypted databases (Supabase with encryption at rest)</li>
+                  <li>• Encrypted databases with encryption at rest</li>
                   <li>• Secure cloud infrastructure with access controls</li>
                   <li>• Regular security audits and vulnerability assessments</li>
                   <li>• Data backups with retention policies</li>

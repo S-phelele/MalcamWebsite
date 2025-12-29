@@ -1,7 +1,5 @@
 import { useState } from 'react';
 import { Mail, Phone, MapPin, Send } from 'lucide-react';
-import { supabase } from '../lib/supabase';
-import type { ContactSubmission } from '../types';
 
 interface ContactProps {
   onNavigate: (page: string) => void;
@@ -18,35 +16,31 @@ export default function Contact({ onNavigate }: ContactProps) {
   });
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-  const [error, setError] = useState('');
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setError('');
 
-    const submission: ContactSubmission = {
-      form_type: formData.formType,
-      name: formData.name,
-      email: formData.email,
-      company: formData.company || undefined,
-      phone: formData.phone || undefined,
-      message: formData.message,
-    };
+    const emailBody = `
+Name: ${formData.name}
+Email: ${formData.email}
+Company: ${formData.company || 'N/A'}
+Phone: ${formData.phone || 'N/A'}
+Inquiry Type: ${formData.formType}
 
-    const { error: submitError } = await supabase
-      .from('contact_submissions')
-      .insert([submission]);
+Message:
+${formData.message}
+    `.trim();
 
-    setLoading(false);
+    const mailtoLink = `mailto:sales@malcam.co.za?subject=Contact Form - ${formData.formType}&body=${encodeURIComponent(emailBody)}`;
 
-    if (submitError) {
-      setError('Failed to submit form. Please try again or email us directly.');
-      return;
-    }
+    window.location.href = mailtoLink;
 
-    setSubmitted(true);
-    setFormData({ name: '', email: '', company: '', phone: '', message: '', formType: 'general' });
+    setTimeout(() => {
+      setLoading(false);
+      setSubmitted(true);
+      setFormData({ name: '', email: '', company: '', phone: '', message: '', formType: 'general' });
+    }, 500);
   };
 
   if (submitted) {
@@ -153,12 +147,6 @@ export default function Contact({ onNavigate }: ContactProps) {
             <div className="lg:col-span-2">
               <form onSubmit={handleSubmit} className="bg-white border-2 border-gray-200 rounded-xl p-8">
                 <h2 className="text-2xl font-bold text-black mb-6">Send Us a Message</h2>
-
-                {error && (
-                  <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">
-                    {error}
-                  </div>
-                )}
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                   <div>
